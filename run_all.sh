@@ -75,7 +75,7 @@ echo ""
 sleep 3
 
 # Go to frontend and start npm dev server
-echo -e "${BLUE}Starting React frontend on http://localhost:5173...${NC}"
+echo -e "${BLUE}Starting React frontend on http://localhost:5174...${NC}"
 cd ../frontend
 npm run dev &
 FRONTEND_PID=$!
@@ -84,7 +84,7 @@ echo -e "${GREEN}Frontend started with PID: $FRONTEND_PID${NC}"
 echo ""
 echo -e "${GREEN}========================================${NC}"
 echo -e "${GREEN}✓ Backend running at:  http://localhost:8000${NC}"
-echo -e "${GREEN}✓ Frontend running at: http://localhost:5173${NC}"
+echo -e "${GREEN}✓ Frontend running at: http://localhost:5174${NC}"
 echo -e "${GREEN}========================================${NC}"
 echo ""
 echo -e "${YELLOW}Press Ctrl+C to stop both servers${NC}"
