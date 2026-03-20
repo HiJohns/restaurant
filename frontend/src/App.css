@@ -91,3 +91,152 @@ body {
 .order-button:active {
   transform: scale(0.98);
 }
+
+.staff-view {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.staff-view h2 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.order-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.order-card {
+  background: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 20px;
+}
+
+.order-card h3 {
+  margin: 0 0 10px 0;
+  color: #2c3e50;
+}
+
+.order-card .status {
+  color: #e67e22;
+  font-weight: bold;
+}
+
+.order-card .items {
+  color: #666;
+  margin: 10px 0;
+}
+
+.order-card .total {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #27ae60;
+}
+
+.order-card button {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.order-card button:hover {
+  background-color: #2980b9;
+}
+
+.stats-cards {
+  display: flex;
+  gap: 30px;
+}
+
+.stat-card {
+  flex: 1;
+  background: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 30px;
+  text-align: center;
+}
+
+.stat-card h3 {
+  color: #666;
+  margin: 0 0 10px 0;
+}
+
+.stat-card .stat-value {
+  font-size: 2em;
+  font-weight: bold;
+  color: #27ae60;
+  margin: 0;
+}
+
+.add-dish-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.add-dish-form input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex: 1;
+  min-width: 150px;
+}
+
+.add-dish-form button {
+  padding: 10px 20px;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-dish-form button:hover {
+  background-color: #219a52;
+}
+
+.dishes-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dishes-table th,
+.dishes-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.dishes-table th {
+  background: #f5f5f5;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.dishes-table td {
+  color: #666;
+}
+
+.dishes-table .delete-btn {
+  padding: 6px 12px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dishes-table .delete-btn:hover {
+  background-color: #c0392b;
+}
