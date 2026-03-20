@@ -25,14 +25,20 @@ install:
 	./venv/bin/pip install -r requirements.txt
 	cd $(FRONTEND_DIR) && npm install
 
+# 构建前端 UI
+build-ui:
+	@echo "构建前端..."
+	cd $(FRONTEND_DIR) && npm run build
+	@echo "前端构建完成，输出到 frontend/dist/"
+
 # 启动 Customer 后端 (端口 8001)
 backend-customer:
 	@echo "正在启动 Customer 后端服务 (端口 8001)..."
 	$(UVICORN) app.run_customer:app_customer --host $(BACKEND_HOST) --port 8001 --reload
 
-# 启动 Staff 后端 (端口 8000)
-backend-staff:
-	@echo "正在启动 Staff 后端服务 (端口 8000)..."
+# 启动 Staff 后端 (端口 8000) - 先构建 UI
+backend-staff: build-ui
+	@echo "正在启动 Staff 后端服务 (端口 8000) 带前端..."
 	$(UVICORN) app.run_staff:app_staff --host $(BACKEND_HOST) --port 8000 --reload
 
 # 启动前端 (增加 --host 以支持 AWS 访问)
