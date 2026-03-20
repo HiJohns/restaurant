@@ -20,6 +20,16 @@ app_staff.add_middleware(
 async def startup_event():
     init_db()
 
+@app_staff.get("/dishes")
+async def get_dishes():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, name, description, price FROM dishes")
+    dishes = cursor.fetchall()
+    conn.close()
+    
+    return [{"id": d[0], "name": d[1], "description": d[2], "price": d[3]} for d in dishes]
+
 @app_staff.get("/orders/pending")
 async def get_pending_orders():
     conn = get_db_connection()
