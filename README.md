@@ -23,15 +23,20 @@ cd restaurant
 
 2. **启动所有服务**
 ```bash
-./run_all.sh
+make start
 ```
 
-这个脚本会自动：
-- 创建并激活 Python 虚拟环境
-- 安装 Python 依赖 (FastAPI, Uvicorn, Pydantic)
-- 安装前端依赖
-- 启动后端 API (端口 8000)
+这个命令会自动：
+- 启动 Customer 后端 API (端口 8001) - 客户菜单和下单
+- 启动 Staff 后端 API (端口 8000) - 员工管理和分析
 - 启动前端开发服务器 (端口 5174)
+
+或者分别启动：
+```bash
+make backend-customer  # 客户后端 (8001)
+make backend-staff     # 员工后端 (8000)
+make frontend          # 前端 (5174)
+```
 
 3. **访问应用**
 - 本地访问: http://localhost:5174
@@ -142,8 +147,16 @@ restaurant/
 
 ## API 端点
 
+### Customer Service (端口 8001)
 - **GET** `/dishes` - 获取菜品列表
 - **POST** `/order` - 创建订单
+
+### Staff Service (端口 8000)
+- **GET** `/orders/pending` - 获取待处理订单
+- **PATCH** `/order/{id}/status` - 更新订单状态
+- **GET** `/analytics/revenue` - 获取收入分析
+- **POST** `/dishes` - 创建菜品 (管理员)
+- **DELETE** `/dishes/{id}` - 删除菜品 (管理员)
 
 ## 技术栈
 

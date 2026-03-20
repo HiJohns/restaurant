@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script type="module">
+import { API_BASE } from 'http://opencode.linxdeep.com:5174/src/config.js';
+console.log('API_BASE:', API_BASE);
+fetch(`${API_BASE}/dishes`)
+  .then(r => r.json())
+  .then(d => console.log('Dishes:', d));
+</script>
+</body>
+</html>

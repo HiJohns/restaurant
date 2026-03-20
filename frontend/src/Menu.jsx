@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { API_BASE } from './config';
+import { CUSTOMER_API } from './config/customer';
 
 const Menu = () => {
   const [dishes, setDishes] = useState([]);
@@ -25,7 +25,7 @@ const Menu = () => {
 
   const fetchDishes = async () => {
     try {
-      const response = await fetch(`${API_BASE}/dishes`);
+      const response = await fetch(`${CUSTOMER_API}/dishes`);
       if (!response.ok) {
         throw new Error('Failed to fetch dishes');
       }
@@ -46,7 +46,7 @@ const Menu = () => {
 
     try {
       const items = Array.from(selectedDishes).map((id) => ({ id, quantity: 1 }));
-      const response = await fetch(`${API_BASE}/order`, {
+      const response = await fetch(`${CUSTOMER_API}/order`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
