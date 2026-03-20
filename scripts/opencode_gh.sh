@@ -1,0 +1,1 @@
+/home/coder/scripts/opencode_gh.sh
