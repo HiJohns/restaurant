@@ -50,11 +50,13 @@ cd restaurant
 **开发环境** (`frontend/.env.development`):
 ```
 VITE_API_BASE=http://localhost:8000
+VITE_STAFF_API=http://localhost:8000
 ```
 
 **生产环境** (`frontend/.env.production`):
 ```
 VITE_API_BASE=http://opencode.linxdeep.com:8000
+VITE_STAFF_API=http://opencode.linxdeep.com:8000
 ```
 
 ### 使用 Nginx 反向代理（推荐）
@@ -124,15 +126,20 @@ export const API_BASE = 'http://opencode.linxdeep.com:8000';
 ```
 restaurant/
 ├── app/                    # FastAPI 后端
-│   └── main.py            # 主应用文件
+│   ├── __init__.py        # Package initializer (NEW)
+│   ├── core.py            # Database & business logic
+│   ├── init_db.py         # Database initialization
+│   ├── run_customer.py    # Customer API service (port 8001)
+│   └── run_staff.py       # Staff API service (port 8000)
 ├── data/                   # 数据库文件
 │   └── smartbite.db       # SQLite 数据库
 ├── frontend/               # React 前端
-│   ├── src/
-│   │   ├── App.jsx        # 主组件
-│   │   ├── Menu.jsx       # 菜单组件
-│   │   └── config.js      # API 配置
-│   └── .env.*             # 环境变量
+│   ├── .env.development   # Dev API config
+│   ├── .env.production    # Prod API config
+│   └── src/
+│       ├── App.jsx        # 主组件
+│       ├── Menu.jsx       # 菜单组件
+│       └── config.js      # API 配置
 ├── scripts/                # 脚本文件
 ├── run_all.sh             # 一键启动脚本
 ├── stop_all.sh            # 一键停止脚本
