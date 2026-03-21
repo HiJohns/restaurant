@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { API_BASE } from './config';
+import { Link } from 'react-router-dom';
+import { CUSTOMER_API } from './config/customer';
 
 const Menu = () => {
   const [dishes, setDishes] = useState([]);
@@ -25,7 +26,7 @@ const Menu = () => {
 
   const fetchDishes = async () => {
     try {
-      const response = await fetch(`${API_BASE}/dishes`);
+      const response = await fetch(`${CUSTOMER_API}/dishes`);
       if (!response.ok) {
         throw new Error('Failed to fetch dishes');
       }
@@ -46,7 +47,7 @@ const Menu = () => {
 
     try {
       const items = Array.from(selectedDishes).map((id) => ({ id, quantity: 1 }));
-      const response = await fetch(`${API_BASE}/order`, {
+      const response = await fetch(`${CUSTOMER_API}/order`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -70,6 +71,9 @@ const Menu = () => {
 
   return (
     <div className="menu-container">
+      <div style={{ textAlign: 'right', marginBottom: '1rem' }}>
+        <Link to="/staff" className="order-button" style={{ fontSize: '0.8rem' }}>Staff Portal</Link>
+      </div>
       <h1>Restaurant Menu</h1>
       <div className="dishes-grid">
         {dishes.map(dish => (

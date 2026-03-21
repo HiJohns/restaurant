@@ -1,21 +1,47 @@
 import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Link, useParams, useNavigate } from 'react-router-dom';
 import Menu from './Menu';
 import './App.css';
+import { STAFF_API } from './config/staff';
 
-const API_BASE = 'http://localhost:8000';
+function StaffDashboard() {
+  const roles = [
+    { key: 'CHEF', label: 'Chef', desc: 'Manage cooking queue' },
+    { key: 'WAITER', label: 'Waiter', desc: 'Handle ready orders' },
+    { key: 'CASHIER', label: 'Cashier', desc: 'Process payments' },
+    { key: 'BOSS', label: 'Boss', desc: 'View revenue analytics' },
+    { key: 'MANAGER', label: 'Manager', desc: 'Manage menu dishes' },
+  ];
+
+  return (
+    <div className="staff-view">
+      <h2>Staff Portal</h2>
+      <div className="role-grid">
+        {roles.map(r => (
+          <Link key={r.key} to={`/staff/${r.key}`} className="role-card">
+            <h3>{r.label}</h3>
+            <p>{r.desc}</p>
+          </Link>
+        ))}
+      </div>
+      <br />
+      <Link to="/" className="back-link">Back to Menu</Link>
+    </div>
+  );
+}
 
 function ChefView() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    fetch(`${API_BASE}/orders/pending`)
+    fetch(`${STAFF_API}/orders/pending`)
       .then(res => res.json())
       .then(data => setOrders(data))
       .catch(err => console.error(err));
   }, []);
 
   const updateStatus = async (orderId, status) => {
-    await fetch(`${API_BASE}/order/${orderId}/status`, {
+    await fetch(`${STAFF_API}/order/${orderId}/status`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status })
@@ -56,14 +82,14 @@ function WaiterView() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    fetch(`${API_BASE}/orders/pending`)
+    fetch(`${STAFF_API}/orders/pending`)
       .then(res => res.json())
       .then(data => setOrders(data.filter(o => o.status === 'READY')))
       .catch(err => console.error(err));
   }, []);
 
   const markServed = async (orderId) => {
-    await fetch(`${API_BASE}/order/${orderId}/status`, {
+    await fetch(`${STAFF_API}/order/${orderId}/status`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status: 'SERVED' })
@@ -93,14 +119,14 @@ function CashierView() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    fetch(`${API_BASE}/orders/pending`)
+    fetch(`${STAFF_API}/orders/pending`)
       .then(res => res.json())
       .then(data => setOrders(data.filter(o => o.status === 'SERVED')))
       .catch(err => console.error(err));
   }, []);
 
   const completePayment = async (orderId) => {
-    await fetch(`${API_BASE}/order/${orderId}/status`, {
+    await fetch(`${STAFF_API}/order/${orderId}/status`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status: 'PAID' })
@@ -130,7 +156,7 @@ function BossView() {
   const [stats, setStats] = useState({ total_revenue: 0, total_orders: 0 });
 
   useEffect(() => {
-    fetch(`${API_BASE}/analytics/revenue`)
+    fetch(`${STAFF_API}/analytics/revenue`)
       .then(res => res.json())
       .then(data => setStats(data.summary))
       .catch(err => console.error(err));
@@ -158,7 +184,7 @@ function ManagerView() {
   const [newDish, setNewDish] = useState({ name: '', description: '', price: '' });
 
   useEffect(() => {
-    fetch(`${API_BASE}/dishes`)
+    fetch(`${STAFF_API}/dishes`)
       .then(res => res.json())
       .then(data => setDishes(data))
       .catch(err => console.error(err));
@@ -166,7 +192,7 @@ function ManagerView() {
 
   const addDish = async (e) => {
     e.preventDefault();
-    const res = await fetch(`${API_BASE}/dishes`, {
+    const res = await fetch(`${STAFF_API}/dishes`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newDish)
@@ -177,7 +203,7 @@ function ManagerView() {
   };
 
   const deleteDish = async (id) => {
-    await fetch(`${API_BASE}/dishes/${id}`, { method: 'DELETE' });
+    await fetch(`${STAFF_API}/dishes/${id}`, { method: 'DELETE' });
     setDishes(dishes.filter(d => d.id !== id));
   };
 
@@ -233,29 +259,29 @@ function ManagerView() {
   );
 }
 
+function StaffView() {
+  const { role } = useParams();
+  switch (role) {
+    case 'CHEF': return <ChefView />;
+    case 'WAITER': return <WaiterView />;
+    case 'CASHIER': return <CashierView />;
+    case 'BOSS': return <BossView />;
+    case 'MANAGER': return <ManagerView />;
+    default: return <StaffDashboard />;
+  }
+}
+
 function App() {
-  const [role, setRole] = useState(null);
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    setRole(params.get('role'));
-  }, []);
-
-  const renderStaffView = () => {
-    switch (role) {
-      case 'CHEF': return <ChefView />;
-      case 'WAITER': return <WaiterView />;
-      case 'CASHIER': return <CashierView />;
-      case 'BOSS': return <BossView />;
-      case 'MANAGER': return <ManagerView />;
-      default: return <Menu />;
-    }
-  };
-
   return (
-    <div className="app">
-      {renderStaffView()}
-    </div>
+    <BrowserRouter>
+      <div className="app">
+        <Routes>
+          <Route path="/" element={<Menu />} />
+          <Route path="/staff" element={<StaffDashboard />} />
+          <Route path="/staff/:role" element={<StaffView />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
