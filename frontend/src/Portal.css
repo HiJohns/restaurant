@@ -35,6 +35,130 @@
   padding: 2rem;
 }
 
+/* Enhanced order cards */
+.order-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.75rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.order-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: #3182ce;
+}
+
+.order-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.order-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 1rem 0;
+}
+
+.order-items {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #4a5568;
+  margin: 1.25rem 0;
+}
+
+.order-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.order-total {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2f855a;
+}
+
+/* Status badges with colors */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0.75rem 0;
+  gap: 0.5rem;
+}
+
+.status-badge::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-confirmed {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-confirmed::before {
+  background: #f59e0b;
+  display: inline-block;
+}
+
+.status-COOKING {
+  background: #fed7d7;
+  color: #991b1b;
+}
+
+.status-COOKING::before {
+  background: #ef4444;
+  display: inline-block;
+}
+
+.status-READY {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status-READY::before {
+  background: #10b981;
+  display: inline-block;
+}
+
+.status-SERVED {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.status-SERVED::before {
+  background: #3b82f6;
+  display: inline-block;
+}
+
+.status-PAID {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status-PAID::before {
+  background: #10b981;
+  display: inline-block;
+}
+
 .portal-container {
   padding: 2rem;
   background: #1a1f25;
@@ -55,62 +179,32 @@
   gap: 1.5rem;
 }
 
-.order-card {
-  background: #2d3748;
-  padding: 1.5rem;
-  border-radius: 8px;
-  border: 1px solid #4a5568;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.order-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.order-card h3 {
-  color: #f6ad55;
-  margin-top: 0;
-  border-bottom: 1px solid #4a5568;
-  padding-bottom: 0.5rem;
-}
-
-.status-badge {
-  display: inline-block;
-  padding: 0.25rem 0.75rem;
-  border-radius: 12px;
-  font-size: 0.85rem;
+.btn-primary {
+  background: #3182ce;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
   font-weight: 600;
-  margin: 0.5rem 0;
-}
-
-.status-confirmed {
-  background: #f6e05e;
-  color: #1a202c;
-}
-
-.status-COOKING {
-  background: #ed8936;
-  color: white;
-}
-
-.status-READY {
-  background: #38a169;
-  color: white;
-}
-
-.order-items {
-  color: #cbd5e0;
-  margin: 1rem 0;
+  transition: all 0.3s ease;
   font-size: 0.9rem;
-  line-height: 1.5;
+  position: relative;
+  overflow: hidden;
 }
 
-.total-amount {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #f6ad55;
-  margin: 1rem 0;
+.btn-primary:hover {
+  background: #2c5282;
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+  background: #4a5568;
+  cursor: not-allowed;
 }
 
 button {
@@ -125,15 +219,6 @@ button {
 
 button:hover {
   transform: translateY(-1px);
-}
-
-.btn-primary {
-  background: #3182ce;
-  color: white;
-}
-
-.btn-primary:hover {
-  background: #2c5282;
 }
 
 .btn-success {
@@ -152,4 +237,25 @@ button:hover {
 
 .btn-secondary:hover {
   background: #6b46c1;
+}
+
+/* Responsive design breakpoints */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+  .order-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .order-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 }
