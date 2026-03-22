@@ -7,9 +7,9 @@ function Login({ onLoginSuccess }) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const API_BASE = import.meta.env.VITE_API_BASE || window.location.port === '8001' 
+  const API_BASE = import.meta.env.VITE_API_BASE || (window.location.port === '8001' 
     ? 'http://localhost:8001' 
-    : 'http://localhost:8000';
+    : 'http://localhost:8000');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
