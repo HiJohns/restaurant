@@ -1,31 +1,73 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Link, useParams, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, Navigate, useParams } from 'react-router-dom';
 import Menu from './Menu';
+import Login from './Login';
+import StaffDashboard from './StaffDashboard';
 import './App.css';
 import { STAFF_API } from './config/staff';
 
-function StaffDashboard() {
-  const roles = [
-    { key: 'CHEF', label: 'Chef', desc: 'Manage cooking queue' },
-    { key: 'WAITER', label: 'Waiter', desc: 'Handle ready orders' },
-    { key: 'CASHIER', label: 'Cashier', desc: 'Process payments' },
-    { key: 'BOSS', label: 'Boss', desc: 'View revenue analytics' },
-    { key: 'MANAGER', label: 'Manager', desc: 'Manage menu dishes' },
-  ];
+function StaffDashboardWrapper() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userRole, setUserRole] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('auth_token');
+    const role = localStorage.getItem('user_role');
+    
+    if (token && role) {
+      setIsAuthenticated(true);
+      setUserRole(role);
+    }
+  }, []);
+
+  const handleLoginSuccess = (userData) => {
+    setIsAuthenticated(true);
+    setUserRole(userData.role);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('user_role');
+    setIsAuthenticated(false);
+    setUserRole(null);
+  };
 
   return (
-    <div className="staff-view">
-      <h2>Staff Portal</h2>
-      <div className="role-grid">
-        {roles.map(r => (
-          <Link key={r.key} to={`/staff/${r.key}`} className="role-card">
-            <h3>{r.label}</h3>
-            <p>{r.desc}</p>
-          </Link>
-        ))}
-      </div>
-      <br />
-      <Link to="/" className="back-link">Back to Menu</Link>
+    <div className="app staff-app">
+      <header className="staff-header">
+        <h1>SmartBite Staff Portal</h1>
+        {isAuthenticated && (
+          <button onClick={handleLogout} className="logout-btn">
+            Logout ({userRole})
+          </button>
+        )}
+      </header>
+      <main className="staff-main">
+        <Routes>
+          <Route 
+            path="/login" 
+            element={
+              isAuthenticated ? 
+                <Navigate to="/dashboard" replace /> : 
+                <Login onLoginSuccess={handleLoginSuccess} />
+            } 
+          />
+          <Route 
+            path="/dashboard" 
+            element={
+              isAuthenticated ? 
+                <StaffDashboard /> : 
+                <Navigate to="/login" replace />
+            } 
+          />
+          <Route 
+            path="/" 
+            element={
+              <Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />
+            } 
+          />
+        </Routes>
+      </main>
     </div>
   );
 }
@@ -267,17 +309,27 @@ function StaffView() {
     case 'CASHIER': return <CashierView />;
     case 'BOSS': return <BossView />;
     case 'MANAGER': return <ManagerView />;
-    default: return <StaffDashboard />;
+    default: return <div>Role not found: {role}</div>;
   }
 }
 
 function App() {
+  const isStaffPort = window.location.port === '8001';
+
+  if (isStaffPort) {
+    return (
+      <BrowserRouter>
+        <StaffDashboardWrapper />
+      </BrowserRouter>
+    );
+  }
+
   return (
     <BrowserRouter>
       <div className="app">
         <Routes>
           <Route path="/" element={<Menu />} />
-          <Route path="/staff" element={<StaffDashboard />} />
+          <Route path="/staff" element={<div>Staff portal requires authentication. Access via port 8001.</div>} />
           <Route path="/staff/:role" element={<StaffView />} />
         </Routes>
       </div>
