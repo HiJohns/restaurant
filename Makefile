@@ -35,12 +35,12 @@ build-ui:
 # 启动 Customer 后端 (端口 8001)
 backend-customer:
 	@echo "正在启动 Customer 后端服务 (端口 8001)..."
-	$(UVICORN) app.run_customer:app_customer --host $(BACKEND_HOST) --port 8001 --reload
+	$(UVICORN) app.run_customer:app_customer --host $(BACKEND_HOST) --port 8000 --reload
 
 # 启动主服务 (端口 8000) - 先构建 UI
 run-main: build-ui
 	@echo "正在启动主服务 (端口 8000, UI + API)..."
-	$(UVICORN) app.run_staff:app_staff --host $(BACKEND_HOST) --port 8000 --reload
+	$(UVICORN) app.run_staff:app_staff --host $(BACKEND_HOST) --port 8001 --reload
 
 # 启动前端 (增加 --host 以支持 AWS 访问)
 frontend:
