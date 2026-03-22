@@ -1,0 +1,155 @@
+/* Portal.css - Internal Tool Theme */
+.staff-app {
+  background: #0f1419;
+  color: #e2e8f0;
+  min-height: 100vh;
+}
+
+.staff-header {
+  background: #1a1f25;
+  padding: 1rem 2rem;
+  border-bottom: 2px solid #3182ce;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.staff-header h1 {
+  color: #63b3ed;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.logout-btn {
+  background: #e53e3e;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.staff-main {
+  padding: 2rem;
+}
+
+.portal-container {
+  padding: 2rem;
+  background: #1a1f25;
+  border-radius: 8px;
+  border: 1px solid #4a5568;
+}
+
+.portal-container h2 {
+  color: #63b3ed;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #3182ce;
+  padding-bottom: 0.5rem;
+}
+
+.order-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.order-card {
+  background: #2d3748;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #4a5568;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.order-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.order-card h3 {
+  color: #f6ad55;
+  margin-top: 0;
+  border-bottom: 1px solid #4a5568;
+  padding-bottom: 0.5rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+}
+
+.status-confirmed {
+  background: #f6e05e;
+  color: #1a202c;
+}
+
+.status-COOKING {
+  background: #ed8936;
+  color: white;
+}
+
+.status-READY {
+  background: #38a169;
+  color: white;
+}
+
+.order-items {
+  color: #cbd5e0;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.total-amount {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f6ad55;
+  margin: 1rem 0;
+}
+
+button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: #3182ce;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #2c5282;
+}
+
+.btn-success {
+  background: #38a169;
+  color: white;
+}
+
+.btn-success:hover {
+  background: #2f855a;
+}
+
+.btn-secondary {
+  background: #805ad5;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #6b46c1;
+}
